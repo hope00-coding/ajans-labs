@@ -11,7 +11,7 @@ export const DISPERSION = 4 // kenarlardaki kırmızı/mavi renk ayrışması
 export const SCROLL_SPEED = 0.0011 // kaydırma hassasiyeti
 
 /* ---------------- Denizanası modeli ---------------- */
-export const MODEL_URL = '/jellyfish.glb' // public/ klasöründeki dosya
+export const MODEL_URL = import.meta.env.BASE_URL + 'jellyfish.glb'
 export const MODEL_SCALE = 1.5 // büyütme. Dışarı taşan kısım kürede kesilir (aşağıda CLIP_RADIUS)
 export const MODEL_OFFSET = [0, 0, 0] // [sağ-sol, yukarı-aşağı, ileri-geri]
 export const MODEL_ROTATION = [0, 0, 0] // radyan, baş aşağıysa [Math.PI, 0, 0]
