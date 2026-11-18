@@ -102,7 +102,7 @@ export default function GlassSphere() {
     if (!mesh) return
 
     // kaydırma ilerlemesini yumuşat
-    store.value += (store.target - store.value) * (1 - Math.exp(-6 * dt))
+    store.value += (store.target - store.value) * (1 - Math.exp(-3.6 * dt))
     const prog = store.value
     mesh.visible = prog < 0.997
     if (!mesh.visible) return

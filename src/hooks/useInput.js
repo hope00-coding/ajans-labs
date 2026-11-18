@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
-import { addScroll, goToPage, store } from '../store'
-import { MAX_PAGE, SCROLL_SPEED } from '../config'
+import { goToPage, stepPage, store } from '../store'
+import { MAX_PAGE } from '../config'
+
+const WHEEL_IDLE_MS = 180
+const WHEEL_THRESHOLD_PX = 40
 
 const scrollArea = (e) => e.target?.closest?.('[data-scroll]')
 const dialogOpen = () => document.querySelector('dialog[open]')
@@ -11,42 +14,39 @@ const canScroll = (el, dy) => el && (
 export default function useInput() {
   useEffect(() => {
     let gesture = null
-    let wheelTimer
-    let wheelStart = null
+    let wheelTime = -Infinity
+    let wheelDistance = 0
+    let wheelHandled = false
 
     const onWheel = (e) => {
       if (e.ctrlKey || dialogOpen() || canScroll(scrollArea(e), e.deltaY)) return
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
+      if (!e.deltaY || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
       e.preventDefault()
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1
-      const distance = e.deltaY * unit
-      if (wheelStart === null) {
-        wheelStart = { page: Math.round(store.pageTarget), distance: 0, scatter: store.target }
+      const now = performance.now()
+      if (now - wheelTime >= WHEEL_IDLE_MS) {
+        wheelDistance = 0
+        wheelHandled = false
       }
-      wheelStart.distance += distance
-      addScroll(distance * SCROLL_SPEED)
-      const lastInput = store.lastInput
-      clearTimeout(wheelTimer)
-      wheelTimer = setTimeout(() => {
-        const start = wheelStart
-        wheelStart = null
-        if (store.lastInput !== lastInput || dialogOpen() || start.scatter < 1 || store.target < 1) return
-        if (Math.abs(start.distance) >= 40 && Math.round(store.pageTarget) === start.page) {
-          goToPage(start.page + Math.sign(start.distance))
-        }
-      }, 110)
+      wheelTime = now
+      if (wheelHandled) return
+      wheelDistance += e.deltaY * unit
+      if (Math.abs(wheelDistance) < WHEEL_THRESHOLD_PX) return
+      wheelHandled = true
+      stepPage(Math.sign(wheelDistance))
     }
 
     const onTouchStart = (e) => {
-      gesture = null
+      finishTouch({ type: 'touchcancel' })
       if (e.touches.length !== 1 || dialogOpen()) return
       const { clientX: x, clientY: y } = e.touches[0]
       gesture = { x, y, area: scrollArea(e), scatter: store.target, page: Math.round(store.pageTarget), moving: false }
     }
 
     const onTouchMove = (e) => {
-      if (!gesture || e.touches.length !== 1) {
-        gesture = null
+      if (!gesture) return
+      if (e.touches.length !== 1) {
+        finishTouch({ type: 'touchcancel' })
         return
       }
       const dy = gesture.y - e.touches[0].clientY
@@ -61,7 +61,6 @@ export default function useInput() {
       }
       if (e.cancelable) e.preventDefault()
       gesture.distance = dy
-      store.lastInput = performance.now()
       const progress = Math.max(-1, Math.min(1, dy / Math.min(190, window.innerHeight * 0.32)))
       if (gesture.scatter < 1 || (gesture.page === 0 && dy < 0)) {
         store.target = Math.max(0, Math.min(1, gesture.scatter + progress))
@@ -91,12 +90,7 @@ export default function useInput() {
       const direction = up || e.shiftKey ? -1 : 1
       if (canScroll(scrollArea(e), direction)) return
       e.preventDefault()
-      const page = Math.round(store.pageTarget)
-      if (store.target < 1 || (page === 0 && direction < 0)) {
-        goToPage(0, direction > 0)
-      } else {
-        goToPage(page + direction)
-      }
+      if (!e.repeat) stepPage(direction)
     }
 
     const onPointerMove = (e) => {
@@ -113,7 +107,6 @@ export default function useInput() {
     window.addEventListener('keydown', onKey)
     window.addEventListener('pointermove', onPointerMove)
     return () => {
-      clearTimeout(wheelTimer)
       window.removeEventListener('wheel', onWheel)
       window.removeEventListener('touchstart', onTouchStart)
       window.removeEventListener('touchmove', onTouchMove)

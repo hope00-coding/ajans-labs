@@ -8,7 +8,6 @@ export const SPHERE_R = 1.75 // küre yarıçapı
 export const TILE_TILT = 0.22 // panellerin rastgele eğimi (arkadaki yazıyı kırıp kaydırır)
 export const GLASS_THICK = 1.5 // cam kalınlığı = kırılma/kayma miktarı
 export const DISPERSION = 4 // kenarlardaki kırmızı/mavi renk ayrışması
-export const SCROLL_SPEED = 0.0011 // kaydırma hassasiyeti
 
 /* ---------------- Denizanası modeli ---------------- */
 export const MODEL_URL = import.meta.env.BASE_URL + 'jellyfish-optimized.glb'
@@ -62,10 +61,7 @@ export const SECTIONS = [
 ]
 
 /* ---------------- Başlık geçişleri ---------------- */
-export const PAGE_SPEED = 0.85 // kaydırma başına kaç sayfa ilerlesin (büyük = daha hızlı geçer)
-export const PAGE_SMOOTH = 5 // yumuşatma (büyük = daha çabuk oturur)
-export const SNAP_DELAY = 140 // ms: kaydırmayı bırakınca en yakın başlığa oturma gecikmesi
-export const SNAP_STRENGTH = 6 // oturma hızı
+export const PAGE_SMOOTH = 2.6 // yumuşatma (büyük = daha çabuk oturur)
 export const HEADING_Z = -3 // başlıkların derinliği (denizanasının arkasında kalmalı, daha negatif = daha uzak)
 export const HEADING_FONT_VW = 19.5 // başlık boyutu (ekran genişliği yüzdesi)
 export const HEADING_STEP = 1.5 // iki başlık arası mesafe (ekran genişliği katı). Büyütürsen daha geç gelir

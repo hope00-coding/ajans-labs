@@ -13,8 +13,6 @@ import {
   HEADING_EXIT,
   HEADING_DROP,
   PAGE_SMOOTH,
-  SNAP_DELAY,
-  SNAP_STRENGTH,
 } from '../config'
 
 // Düzlemi silindire sarıyoruz. uSlot = (başlık sırası - sayfa): 0 ortada, +1 sağda, -1 solda bekliyor.
@@ -158,14 +156,9 @@ export default function Headings() {
   }, [items, size.width, size.height, dpr])
 
     useFrame((_, dt) => {
-    const now = performance.now()
-
-    // Kaydırmayı bırakınca en yakın durağa otur (cam dağıldıktan sonra)
-    if (store.target >= 0.999 && now - store.lastInput > SNAP_DELAY) {
-      store.pageTarget += (Math.round(store.pageTarget) - store.pageTarget) * (1 - Math.exp(-dt * SNAP_STRENGTH))
-    }
-    // Yumuşatılmış sayfa değeri
-    store.page += (store.pageTarget - store.page) * (1 - Math.exp(-dt * PAGE_SMOOTH))
+    const distance = store.pageTarget - store.page
+    const rate = Math.abs(distance) > 1.5 ? 5 : PAGE_SMOOTH
+    store.page += distance * (1 - Math.exp(-dt * rate))
 
     const last = SECTIONS.length - 1
 
