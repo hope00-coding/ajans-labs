@@ -2,8 +2,9 @@ import { useEffect } from 'react'
 import { goToPage, stepPage, store } from '../store'
 import { MAX_PAGE } from '../config'
 
-const WHEEL_IDLE_MS = 180
-const WHEEL_THRESHOLD_PX = 40
+const WHEEL_IDLE_MS = 240
+const OPENING_DISTANCE_PX = 950
+const PAGE_DISTANCE_PX = 560
 
 const scrollArea = (e) => e.target?.closest?.('[data-scroll]')
 const dialogOpen = () => document.querySelector('dialog[open]')
@@ -14,29 +15,51 @@ const canScroll = (el, dy) => el && (
 export default function useInput() {
   useEffect(() => {
     let gesture = null
-    let wheelTime = -Infinity
-    let wheelDistance = 0
-    let wheelHandled = false
+    let wheelTimer
+    let wheelStartPage = null
+
+    const resetWheel = () => {
+      clearTimeout(wheelTimer)
+      wheelStartPage = null
+    }
 
     const onWheel = (e) => {
       if (e.ctrlKey || dialogOpen() || canScroll(scrollArea(e), e.deltaY)) return
       if (!e.deltaY || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
       e.preventDefault()
+
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1
-      const now = performance.now()
-      if (now - wheelTime >= WHEEL_IDLE_MS) {
-        wheelDistance = 0
-        wheelHandled = false
+      const delta = Math.max(-120, Math.min(120, e.deltaY * unit))
+      if ((delta > 0 && store.target < 1) || (delta < 0 && store.pageTarget === 0)) {
+        resetWheel()
+        store.target = Math.max(0, Math.min(1, store.target + delta / OPENING_DISTANCE_PX))
+        return
       }
-      wheelTime = now
-      if (wheelHandled) return
-      wheelDistance += e.deltaY * unit
-      if (Math.abs(wheelDistance) < WHEEL_THRESHOLD_PX) return
-      wheelHandled = true
-      stepPage(Math.sign(wheelDistance))
+
+      if (wheelStartPage === null) wheelStartPage = Math.round(store.pageTarget)
+      const next = store.pageTarget + delta / PAGE_DISTANCE_PX
+      // Keep accepting input without letting the target outrun the visible scene.
+      const lower = Math.min(store.pageTarget, Math.max(0, store.page - 0.65))
+      const upper = Math.max(store.pageTarget, Math.min(MAX_PAGE, store.page + 0.65))
+      store.pageTarget = Math.max(lower, Math.min(upper, next))
+
+      const target = store.pageTarget
+      clearTimeout(wheelTimer)
+      wheelTimer = setTimeout(() => {
+        const start = wheelStartPage
+        wheelStartPage = null
+        if (store.pageTarget !== target || dialogOpen()) return
+        const rounded = Math.round(target)
+        const distance = target - start
+        const destination = rounded === start && Math.abs(distance) >= 0.16
+          ? start + Math.sign(distance)
+          : rounded
+        goToPage(destination)
+      }, WHEEL_IDLE_MS)
     }
 
     const onTouchStart = (e) => {
+      resetWheel()
       finishTouch({ type: 'touchcancel' })
       if (e.touches.length !== 1 || dialogOpen()) return
       const { clientX: x, clientY: y } = e.touches[0]
@@ -90,7 +113,10 @@ export default function useInput() {
       const direction = up || e.shiftKey ? -1 : 1
       if (canScroll(scrollArea(e), direction)) return
       e.preventDefault()
-      if (!e.repeat) stepPage(direction)
+      if (!e.repeat) {
+        resetWheel()
+        stepPage(direction)
+      }
     }
 
     const onPointerMove = (e) => {
@@ -107,6 +133,7 @@ export default function useInput() {
     window.addEventListener('keydown', onKey)
     window.addEventListener('pointermove', onPointerMove)
     return () => {
+      resetWheel()
       window.removeEventListener('wheel', onWheel)
       window.removeEventListener('touchstart', onTouchStart)
       window.removeEventListener('touchmove', onTouchMove)

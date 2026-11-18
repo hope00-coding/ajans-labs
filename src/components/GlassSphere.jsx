@@ -108,7 +108,7 @@ export default function GlassSphere() {
     if (!mesh.visible) return
 
     // paneller: küre konumu -> dağılmış konum
-    const e = 1 - Math.pow(1 - prog, 3)
+    const e = smooth(0, 1, prog)
     const { dummy, q, e: euler, p } = tmp
     for (let i = 0; i < tiles.length; i++) {
       const d = tiles[i]
