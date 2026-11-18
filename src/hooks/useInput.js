@@ -51,10 +51,8 @@ export default function useInput() {
         if (store.pageTarget !== target || dialogOpen()) return
         const rounded = Math.round(target)
         const distance = target - start
-        const destination = rounded === start && Math.abs(distance) >= 0.16
-          ? start + Math.sign(distance)
-          : rounded
-        goToPage(destination)
+        if (rounded === start && Math.abs(distance) < 0.06) return
+        goToPage(rounded === start ? start + Math.sign(distance) : rounded)
       }, WHEEL_IDLE_MS)
     }
 
