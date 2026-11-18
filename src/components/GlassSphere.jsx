@@ -104,6 +104,8 @@ export default function GlassSphere() {
     // kaydırma ilerlemesini yumuşat
     store.value += (store.target - store.value) * (1 - Math.exp(-6 * dt))
     const prog = store.value
+    mesh.visible = prog < 0.997
+    if (!mesh.visible) return
 
     // paneller: küre konumu -> dağılmış konum
     const e = 1 - Math.pow(1 - prog, 3)

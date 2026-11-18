@@ -11,7 +11,7 @@ export const DISPERSION = 4 // kenarlardaki kırmızı/mavi renk ayrışması
 export const SCROLL_SPEED = 0.0011 // kaydırma hassasiyeti
 
 /* ---------------- Denizanası modeli ---------------- */
-export const MODEL_URL = import.meta.env.BASE_URL + 'jellyfish.glb'
+export const MODEL_URL = import.meta.env.BASE_URL + 'jellyfish-optimized.glb'
 export const MODEL_SCALE = 1.5 // büyütme. Dışarı taşan kısım kürede kesilir (aşağıda CLIP_RADIUS)
 export const MODEL_OFFSET = [0, 0, 0] // [sağ-sol, yukarı-aşağı, ileri-geri]
 export const MODEL_ROTATION = [0, 0, 0] // radyan, baş aşağıysa [Math.PI, 0, 0]
@@ -55,15 +55,15 @@ export const BELL_PULSE = 0.06 // baş kısmının nefes alır gibi şişip inme
 /* ---------------- Bölümler: başlık + alttaki paragraf ---------------- */
 // Yeni bölüm eklemek için bu diziye bir satır eklemen yeterli, gerisi otomatik.
 export const SECTIONS = [
-  { heading: HEADING, tag: 'Hoş geldin', light: '#4aa8ff', caption: 'İşletmenizi dijitalde bir adım öne taşıyoruz.' },
-  { heading: 'TASARIM', tag: 'Tasarım', light: '#ff4fd8', caption: 'Modern ve özgün tasarım. Markanıza özel, sadece güzel görünen değil.' },
-  { heading: 'DENEYİM', tag: 'Deneyim', light: '#35f0a0', caption: 'Telefon, tablet, bilgisayar. Tüm cihazlarda kusursuz deneyim.' },
-  { heading: 'SONUÇ', tag: 'Sonuç', light: '#ffa040', caption: 'SEO uyumlu altyapı ve kolay yönetim paneli. Sonuç getiren web siteleri.' },
+  { heading: HEADING, tag: 'Hoş geldin', light: '#4aa8ff', caption: 'Tasarım, yazılım ve dijital pazarlama bir arada.' },
+  { heading: 'TASARIM', tag: 'Tasarım', light: '#ff4fd8', caption: 'Marka kimliğinden web arayüzüne, her temas noktasında tutarlı tasarım.' },
+  { heading: 'DENEYİM', tag: 'Deneyim', light: '#35f0a0', caption: 'Her ekranda kullanılabilir web deneyimleri ve e-ticaret altyapıları.' },
+  { heading: 'SONUÇ', tag: 'Sonuç', light: '#ffa040', caption: 'SEO, dijital reklam ve analitikle ölçülebilir büyüme.' },
 ]
 
 /* ---------------- Başlık geçişleri ---------------- */
-export const PAGE_SPEED = 0.1 // kaydırma başına kaç sayfa ilerlesin (büyük = daha hızlı geçer)
-export const PAGE_SMOOTH = 1 // yumuşatma (büyük = daha çabuk oturur)
+export const PAGE_SPEED = 0.85 // kaydırma başına kaç sayfa ilerlesin (büyük = daha hızlı geçer)
+export const PAGE_SMOOTH = 5 // yumuşatma (büyük = daha çabuk oturur)
 export const SNAP_DELAY = 140 // ms: kaydırmayı bırakınca en yakın başlığa oturma gecikmesi
 export const SNAP_STRENGTH = 6 // oturma hızı
 export const HEADING_Z = -3 // başlıkların derinliği (denizanasının arkasında kalmalı, daha negatif = daha uzak)
@@ -113,8 +113,8 @@ export const BG_DOT_ALPHA = 0.9 // nokta belirginliği
 /* ---------------- Final (son başlıktan sonra) ---------------- */
 // Her satır bir durak: önce sol yazı, sonra sağ yazı.
 export const FINALE = [
-  { side: 'left', light: '#8a5cff', text: 'İşletmenizi dijitalde bir adım öne taşıyoruz. Modern, hızlı ve kullanıcı odaklı web siteleri.' },
-  { side: 'right', light: '#ff5fa8', text: 'Sadece güzel görünen değil, sonuç getiren. SEO uyumlu altyapı ve kolay yönetim paneli.' },
+  { side: 'left', light: '#8a5cff', text: 'Tasarım, yazılım ve dijital pazarlama bir arada. Ajans Labs, bu yaklaşımı interaktif bir web demosunda bir araya getiriyor.' },
+  { side: 'right', light: '#ff5fa8', text: 'Halkaları keşfet. Marka, teknoloji, pazarlama ve medya hizmetlerinin nasıl birleştiğini gör.' },
 ]
 
 
@@ -139,14 +139,14 @@ export const FINALE_TOP_MARGIN = 0.2 // finalde denizanasının tepesiyle ekran�
 /* ---------------- Halkalar (finalden sonra) ---------------- */
 // title: dev başlık, code: "|" işaretinden sonraki kısa kod, desc: küçük açıklama, tags: sağdaki madde listesi
 export const RINGS = [
-  { title: 'WEB TASARIM', code: 'UI.UX', light: '#4aa8ff', desc: 'Markanıza özel, modern ve özgün arayüz tasarımı. Sadece güzel görünen değil, kullanıcıyı yönlendiren sayfalar.', tags: ['ÖZEL TASARIM', 'UI / UX', 'MARKA KİMLİĞİ'] },
-  { title: 'SEO', code: 'SEO.01', light: '#35f0a0', desc: 'Arama motorlarında üst sıralara çıkmanızı sağlayan teknik altyapı ve temiz kod yapısı.', tags: ['TEKNİK SEO', 'HIZLI YÜKLEME', 'İÇERİK YAPISI'] },
-  { title: 'E-TİCARET', code: 'SHOP', light: '#ff4fd8', desc: 'Hızlı, güvenli ve satış odaklı online mağazalar. Ödeme ve stok yönetimi dahil.', tags: ['ÖDEME ENTEGRASYONU', 'STOK TAKİBİ', 'GÜVENLİ ALTYAPI'] },
-  { title: 'YÖNETİM PANELİ', code: 'PANEL', light: '#ffa040', desc: 'Kod bilmeden içeriklerinizi, görsellerinizi ve ürünlerinizi kolayca yönetin.', tags: ['KOLAY KULLANIM', 'İÇERİK YÖNETİMİ', 'RAPORLAMA'] },
-  { title: 'MOBİL UYUM', code: 'RESP.', light: '#8a5cff', desc: 'Telefon, tablet ve bilgisayarda kusursuz görünen, her ekrana uyumlu deneyim.', tags: ['RESPONSIVE', 'DOKUNMATİK', 'HER CİHAZ'] },
-  { title: '3D DENEYİM', code: '3D.JS', light: '#ff5fa8', desc: 'Three.js ile interaktif 3D sahneler ve akıcı animasyonlarla akılda kalan siteler.', tags: ['THREE.JS', 'ANİMASYON', 'İNTERAKTİF'] },
-  { title: 'PERFORMANS', code: 'FAST', light: '#4aa8ff', desc: 'Işık hızında yüklenen, optimize edilmiş ve ölçeklenebilir web siteleri.', tags: ['OPTİMİZASYON', 'CDN', 'SKOR 100'] },
-  { title: 'DESTEK', code: '24/7', light: '#35f0a0', desc: 'Yayına aldıktan sonra da yanınızdayız. Bakım, güncelleme ve sürekli destek.', tags: ['BAKIM', 'GÜNCELLEME', 'CANLI DESTEK'] },
+  { title: 'WEB TASARIM', code: 'UI.UX', image: 'web', scope: 'Sayfa akışı ve arayüz prototipi, erişilebilir bir ön yüz, içerik yönetimi ve yayın öncesi cihaz testleri.', light: '#4aa8ff', desc: 'Kullanıcı deneyiminden yayına kadar hızlı, mobil uyumlu ve erişilebilir web siteleri.', tags: ["UI / UX","KURUMSAL SİTE","WEB GELİŞTİRME"] },
+  { title: 'MARKA KİMLİĞİ', code: 'BRAND', image: 'brand', scope: 'Logo varyasyonları, renk paleti ve yazı karakterleriyle birlikte dijital ve basılı kullanım örnekleri.', light: '#35f0a0', desc: 'Logodan tipografiye, markayı her temas noktasında tanınır kılan bir görsel sistem.', tags: ["LOGO","TİPOGRAFİ","MARKA KILAVUZU"] },
+  { title: 'E-TİCARET', code: 'SHOP', image: 'shop', scope: 'Katalog ve kategori yapısı, ürün sayfaları, sepet, ödeme ve sipariş süreçleri.', light: '#ff4fd8', desc: 'Ürün keşfinden ödemeye kadar alışverişi kolaylaştıran Shopify ve WooCommerce mağazaları.', tags: ["SHOPIFY","WOOCOMMERCE","ÖDEME"] },
+  { title: 'ARAMA OPTİMİZASYONU', code: 'SEO', image: 'seo', scope: 'Site taraması, indeksleme kontrolleri, başlık ve içerik düzeni, organik trafik raporları.', light: '#ffa040', desc: 'Teknik SEO, içerik yapısı ve performans ölçümüyle arama görünürlüğünü geliştirme.', tags: ["TEKNİK SEO","ANAHTAR KELİME","ANALİTİK"] },
+  { title: 'DİJİTAL REKLAM', code: 'ADS', image: 'ads', scope: 'Hedef kitle ve kanal seçimi, reklam varyasyonları, dönüşüm etiketleri ve bütçe performansı.', light: '#8a5cff', desc: 'Google, Meta ve YouTube kampanyalarını dönüşüm takibiyle planlama ve iyileştirme.', tags: ["GOOGLE ADS","META ADS","YOUTUBE"] },
+  { title: 'SOSYAL MEDYA', code: 'SOCIAL', image: 'social', scope: 'İçerik sütunları ve yayın takvimi, platforma uygun formatlar, etkileşim ve erişim raporları.', light: '#ff5fa8', desc: 'Marka diline uygun içerik serileri, yayın takvimi ve sosyal medya performans takibi.', tags: ["İÇERİK PLANI","TOPLULUK","RAPORLAMA"] },
+  { title: 'ÖZEL YAZILIM', code: 'DEV', image: 'software', scope: 'Müşteri ve satış verilerini birleştiren API’ler, iş akışı otomasyonu, ekip bazlı raporlar ve gösterge panelleri.', light: '#4aa8ff', desc: 'CRM, API entegrasyonu ve otomasyonla veriyi bir araya getiren yönetim panelleri.', tags: ["CRM","API ENTEGRASYONU","DASHBOARD"] },
+  { title: 'MEDYA PRODÜKSİYONU', code: 'MEDIA', image: 'media', scope: 'Çekim planı, ürün veya etkinlik çekimi, kurgu ve kanal bazında teslim formatları.', light: '#35f0a0', desc: 'Marka hikâyesini ürün fotoğrafı, kampanya videosu ve etkinlik çekimleriyle anlatma.', tags: ["FOTOĞRAF","VİDEO","DRONE"] },
 ]
 export const RING_START = SECTIONS.length - 1 + FINALE.length // finalin son durağı
 /* ---------------- Toplar + iletişim (halkalardan sonra) ---------------- */
@@ -169,18 +169,18 @@ export const BUBBLE_COLOR = '#c9d1e6' // top rengi
 export const BUBBLE_REPEL = 30 // fare itme gücü (büyük = toplar daha sert kaçar)
 export const BUBBLE_SPRING = 9 // toplanma hızı (büyük = daha çabuk geri döner)
 export const BUBBLE_DAMP = 3.5 // sönümleme (küçük = daha çok sallanır)
-export const OUTRO_TEXT = "AJANS LABS'TE TEKNOLOJİ YARATICILIKLA BULUŞUYOR. HER ETKİLEŞİM YENİ BİR FIRSAT."
-export const OUTRO_BUTTON = 'MESAJ GÖNDER →'
+export const OUTRO_TEXT = "MARKA KİMLİĞİNDEN DİJİTAL KAMPANYAYA, PROJE FİKRİNİ BİR BRİFE DÖNÜŞTÜR."
+export const OUTRO_BUTTON = 'PROJE BRİFİ →'
 
 export const CONTACT = {
-  title1: 'BİRLİKTE HARİKA BİR ŞEY YARATALIM',
-  title2: 'SADECE BİZE BİR MESAJ GÖNDERİN',
+  title1: 'PROJE FİKRİNİ BRİFE DÖNÜŞTÜR',
+  title2: 'KAPSAMI VE BÜTÇEYİ BELİRLE',
   name: '[ADINIZ]',
   email: '[E-POSTANIZ]',
   about: '[PROJENİZ NE HAKKINDA]',
   budget: 'PROJE BÜTÇESİ (TL)',
-  send: 'GÖNDER →',
-  sent: 'GÖNDERİLDİ ✓',
+  send: 'BRİFİ İNDİR ↓',
+  sent: 'TEKRAR İNDİR ↓',
   errors: {
     name: 'AD GEREKLİ',
     email: 'E-POSTA GEREKLİ',
@@ -189,11 +189,11 @@ export const CONTACT = {
     budget: 'BÜTÇE SEÇİN',
   },
   budgets: ['10.000 TL ALTI', '10.000 - 25.000 TL', '25.000 - 50.000 TL', '50.000 TL ÜZERİ'],
-  socialTitle: 'SOSYAL',
-  copyright: '© TÜM HAKLARI SAKLIDIR',
+  socialTitle: 'FUEL AGENCY',
+  copyright: 'AJANS LABS · BAĞIMSIZ DEMO',
   social: [
-    { label: 'LINKEDIN', href: '#' },
-    { label: 'INSTAGRAM', href: '#' },
+    { label: 'RESMÎ İLETİŞİM ↗', href: 'https://thefuel.agency/contact/' },
+    { label: 'LINKEDIN ↗', href: 'https://www.linkedin.com/company/thefuelagency/' },
   ],
 }
 

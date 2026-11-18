@@ -27,10 +27,13 @@ function JellyFade({ children }) {
   return <group ref={ref}>{children}</group>
 }
 
-export default function Scene() {
+export default function Scene({ onService }) {
+  const compact = window.matchMedia('(any-pointer: coarse)').matches
   return (
     <Canvas
-      dpr={[1, 2]}
+      dpr={[1, compact ? 1.25 : 1.75]}
+      style={{ touchAction: 'none' }}
+      onCreated={({ gl }) => { gl.transmissionResolutionScale = compact ? 0.5 : 0.75 }}
       camera={{ fov: 35, near: 0.1, far: 100, position: [0, 0, 7] }}
       gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}
     >
@@ -45,7 +48,7 @@ export default function Scene() {
           <Jellyfish />
         </JellySpin>
       </JellyFade>
-      <Rings />
+      <Rings onService={onService} />
       <Bubbles />
       <GlassSphere />
     </Canvas>

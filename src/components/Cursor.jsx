@@ -26,7 +26,7 @@ export default function Cursor() {
 
   return (
     <div id="cursor" ref={ref}>
-      <span>VIEW<br />CASE</span>
+      <span>HİZMETİ<br />İNCELE</span>
     </div>
   )
 }

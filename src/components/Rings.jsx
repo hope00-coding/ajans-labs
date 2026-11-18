@@ -14,8 +14,9 @@ import {
   RING_DRIFT,
 } from '../config'
 
-const TEX_W = 4096
-const TEX_H = 512
+const TEX_W = 2048
+const TEX_H = 256
+const DRAW_SCALE = 0.5
 const R = (RING_TEX_ASPECT * RING_HEIGHT) / (2 * Math.PI) // yarıçap, çevre = aspect * yükseklik
 
 const VERT = /* glsl */ `
@@ -75,11 +76,12 @@ function drawRing(canvas, ring) {
   canvas.width = TEX_W
   canvas.height = TEX_H
   const ctx = canvas.getContext('2d')
-  ctx.clearRect(0, 0, TEX_W, TEX_H)
+  ctx.scale(DRAW_SCALE, DRAW_SCALE)
   ctx.fillStyle = '#fff'
   ctx.textBaseline = 'middle'
 
-  const SW = TEX_W / 2
+  const SW = TEX_W / (2 * DRAW_SCALE)
+  const height = TEX_H / DRAW_SCALE
   const title = ring.title.toLocaleUpperCase('tr')
   const code = ring.code.toLocaleUpperCase('tr')
 
@@ -114,7 +116,7 @@ function drawRing(canvas, ring) {
 
   for (let seg = 0; seg < 2; seg++) {
     const ox = seg * SW + 80
-    const ty = TEX_H * 0.34
+    const ty = height * 0.34
 
     setFont()
     ctx.fillText(title, ox, ty)
@@ -122,15 +124,15 @@ function drawRing(canvas, ring) {
     ctx.fillText(code, ox + m.wT + m.gap * 2 + m.barW, ty)
 
     ctx.font = `400 26px ${RING_MONO}`
-    lines.slice(0, 4).forEach((l, k) => ctx.fillText(l, ox + 20, TEX_H * 0.7 + k * 32))
-    ring.tags.slice(0, 4).forEach((t, k) => ctx.fillText('• ' + t, ox + 920, TEX_H * 0.7 + k * 32))
+    lines.slice(0, 4).forEach((l, k) => ctx.fillText(l, ox + 20, height * 0.7 + k * 32))
+    ring.tags.slice(0, 4).forEach((t, k) => ctx.fillText('• ' + t, ox + 920, height * 0.7 + k * 32))
   }
 }
 
 const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1)
 blank.needsUpdate = true
 
-export default function Rings() {
+export default function Rings({ onService }) {
   const viewport = useThree((s) => s.viewport)
   const camera = useThree((s) => s.camera)
   const groups = useRef([])
@@ -229,7 +231,7 @@ export default function Rings() {
       if (!g) return
       const d = i + 1 - ringP // 0 = ekranın ortasında, +1 = bir halka yukarıda
 
-      if (Math.abs(d) < 2.2) load(it, RINGS[i])
+      if (Math.abs(d) < 1.6) load(it, RINGS[i])
       else unload(it)
 
       g.visible = Math.abs(d) < 1.6
@@ -257,6 +259,11 @@ export default function Rings() {
             ref={(el) => (fronts.current[i] = el)}
             geometry={geometry}
             material={it.front}
+            onClick={(event) => {
+              if (event.delta > 8 || Math.abs(i + 1 - (store.page - RING_START)) > 0.8) return
+              event.stopPropagation()
+              onService(i)
+            }}
             renderOrder={3}
             frustumCulled={false}
           />

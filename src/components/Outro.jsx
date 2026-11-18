@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { store } from '../store'
+import { goToPage, store } from '../store'
 import { BUBBLES_PAGE, CONTACT_PAGE, OUTRO_TEXT, OUTRO_BUTTON } from '../config'
 
 export default function Outro() {
@@ -12,6 +12,7 @@ export default function Outro() {
       if (el) {
         const p = store.page - BUBBLES_PAGE
         const o = Math.max(0, 1 - Math.abs(p) / 0.5)
+        el.style.visibility = o > 0 ? 'visible' : 'hidden'
         el.style.opacity = o.toFixed(3)
         el.style.transform = `translate3d(0, ${(-p * 24).toFixed(1)}px, 0)`
         el.style.pointerEvents = o > 0.6 ? 'auto' : 'none'
@@ -22,10 +23,7 @@ export default function Outro() {
     return () => cancelAnimationFrame(raf)
   }, [])
 
-  const go = () => {
-    store.lastInput = performance.now()
-    store.pageTarget = CONTACT_PAGE // sayfa kendiliğinden aşağı kayar
-  }
+  const go = () => goToPage(CONTACT_PAGE)
 
   return (
     <div className="outro" ref={ref}>

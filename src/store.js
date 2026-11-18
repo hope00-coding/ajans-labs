@@ -41,6 +41,12 @@ export const addScroll = (delta) => {
   }
 }
 
+export const goToPage = (page, scatter = true) => {
+  store.lastInput = performance.now()
+  store.target = scatter ? 1 : 0
+  store.pageTarget = Math.min(Math.max(page, 0), MAX_PAGE)
+}
+
 export const toggleScatter = () => {
   store.lastInput = performance.now()
   if (store.target < 0.999) {

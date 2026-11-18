@@ -29,9 +29,9 @@ src/
 
 ## Kendi denizanasını eklemek
 
-1. Blender'dan `.glb` export et (Draco sıkıştırma açık olsun).
-2. Dosyayı `public/jellyfish.glb` olarak koy.
-3. `src/config.js` içinde `MODEL_URL = '/jellyfish.glb'` yap.
+1. Blender'dan modeli sıkıştırmasız GLB olarak dışa aktar ve `public/jellyfish.glb` dosyasını güncelle.
+2. Proje dizininde `npx @gltf-transform/cli meshopt public/jellyfish.glb public/jellyfish-optimized.glb --level medium` çalıştır.
+3. Yayın, optimize edilmiş dosyayı Vite'ın proje alt yolu üzerinden önceden yükler.
 
 Model otomatik ortalanır ve küreye sığar. Büyük/küçük gelirse `MODEL_SCALE` ile ayarla.
 Cam sadece opak nesneleri gördüğü için model malzemeleri opak yapılır (`FORCE_OPAQUE`).

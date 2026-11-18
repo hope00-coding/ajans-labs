@@ -56,10 +56,21 @@ export default function Contact() {
   const submit = () => {
     setTouched({ name: true, email: true, about: true, budget: true })
     if (['name', 'email', 'about', 'budget'].some((k) => err(k))) return
-    // TODO: burada formu kendi servisinize gönderin (fetch('/api/iletisim', { method: 'POST', body: JSON.stringify(v) }))
+    const brief = [
+      'Ajans Labs — Proje brifi',
+      '',
+      'Ad: ' + v.name.trim(),
+      'E-posta: ' + v.email.trim(),
+      'Proje: ' + v.about.trim(),
+      'Bütçe: ' + v.budget,
+    ].join('\n')
+    const url = URL.createObjectURL(new Blob([brief], { type: 'text/plain;charset=utf-8' }))
+    const download = document.createElement('a')
+    download.href = url
+    download.download = 'ajans-labs-proje-brifi.txt'
+    download.click()
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000)
     setSent(true)
-    setV(EMPTY)
-    setTouched({})
   }
 
   const field = (k, placeholder, type = 'text') => (
@@ -69,6 +80,7 @@ export default function Contact() {
           type={type}
           value={v[k]}
           placeholder={placeholder}
+          aria-label={placeholder}
           onChange={set(k)}
           onBlur={blur(k)}
           autoComplete={k === 'name' ? 'name' : k === 'email' ? 'email' : 'off'}
@@ -86,6 +98,7 @@ export default function Contact() {
         <span className="r">{CONTACT.title2}</span>
       </h2>
 
+      <p className="brief-note">Formu doldurup proje özetini cihazına indirebilirsin.</p>
       <div className="circles">
         {field('name', CONTACT.name)}
         {field('email', CONTACT.email, 'email')}
@@ -94,6 +107,7 @@ export default function Contact() {
         <div className="ccell budget-cell">
           <button
             type="button"
+            aria-expanded={open}
             className={'circle' + (open ? ' open' : '') + (!open && show('budget') ? ' bad' : '')}
             onClick={() => setOpen((o) => !o)}
           >

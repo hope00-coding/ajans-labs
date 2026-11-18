@@ -109,7 +109,7 @@ function patchMaterial(mat, uniforms) {
 
 /* ---------------- Kendi Blender modelin (.glb) ---------------- */
 function GltfModel({ url }) {
-  const { scene, animations } = useGLTF(url)
+  const { scene, animations } = useGLTF(url, false)
   const holder = useRef()
 
   const uniforms = useMemo(
@@ -218,7 +218,9 @@ class ModelBoundary extends Component {
   }
 }
 
-/* ---------------- Dışarıya açılan bileşen ---------------- */
+// Start the mesh request before the canvas mounts.
+useGLTF.preload(MODEL_URL, false)
+
 export default function Jellyfish() {
   const ref = useRef()
 

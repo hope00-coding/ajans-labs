@@ -18,12 +18,13 @@ export default function BottomBar() {
       // Kaydırma başlar başlamaz tüm alt kısım saydamlaşıp kaybolur (%8 kaydırmada tamamen)
       const f = 1 - Math.min(Math.max(v * 12, 0), 1)
       if (footerRef.current) {
+        footerRef.current.style.visibility = f < 0.05 ? 'hidden' : 'visible'
         footerRef.current.style.opacity = f.toFixed(3)
         footerRef.current.style.pointerEvents = f < 0.05 ? 'none' : ''
       }
 
       const overall = (Math.min(v, 1) + store.page) / SECTIONS.length
-      if (fillRef.current) fillRef.current.style.width = (overall * 100).toFixed(1) + '%'
+      if (fillRef.current) fillRef.current.style.width = (Math.min(1, overall) * 100).toFixed(1) + '%'
 
       const idx = Math.min(Math.max(Math.round(store.page), 0), SECTIONS.length - 1)
       const label = v >= 0.98 ? SECTIONS[idx].tag : 'Aşağı kaydır'
@@ -58,7 +59,7 @@ export default function BottomBar() {
 
         <div className="mid">
           <div className="row">
-            <span>Geleceğe adım atmaya hazır mısın?</span>
+            <span>Hizmetleri keşfet</span>
             <span ref={textRef}>Aşağı kaydır</span>
           </div>
           <div className="bar">
