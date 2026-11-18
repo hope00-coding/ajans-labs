@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CONTACT_PAGE, RINGS, RING_START } from '../config'
+import { CONTACT_PAGE, HEADING, RINGS, RING_START } from '../config'
 import { goToPage, store } from '../store'
 
 export function RingControls({ onService }) {
@@ -76,7 +76,7 @@ export default function ServiceDetails({ selection, onSelect, onClose }) {
     >
       <div className="details-inner" data-scroll ref={scrollRef}>
         <div className="details-top">
-          <span>{ring ? ring.code : 'AJANS LABS'}</span>
+          <span>{ring ? ring.code : HEADING}</span>
           <button type="button" onClick={onClose} autoFocus aria-label="Kapat">×</button>
         </div>
         {ring ? (
@@ -99,11 +99,11 @@ export default function ServiceDetails({ selection, onSelect, onClose }) {
           </>
         ) : (
           <>
-            <h2 id="detail-title">TASARIM, YAZILIM VE PAZARLAMA</h2>
-            <p>Ajans Labs, yaratıcı ve teknik hizmetleri tek bir 3D deneyimde keşfetmek için hazırlanmış bağımsız bir web demosu.</p>
-            <p>Hizmet başlıkları, Girne merkezli The Fuel Agency’nin yayımladığı marka tasarımı, web geliştirme, dijital pazarlama ve medya prodüksiyonu çalışmalarından ilham alıyor.</p>
+            <h2 id="detail-title">THE FUEL AGENCY</h2>
+            <p>The Fuel Agency, Girne merkezli bir marka tasarımı, yazılım geliştirme, dijital pazarlama ve prodüksiyon ajansı.</p>
+            <p>Bu bağımsız konsept site, ajansın hizmetlerini etkileşimli bir 3D deneyimde bir araya getiriyor.</p>
             <div className="details-actions">
-              <a href="https://thefuel.agency/" target="_blank" rel="noreferrer">The Fuel Agency ↗</a>
+              <a href="https://thefuel.agency/" target="_blank" rel="noreferrer">Resmî site ↗</a>
               <button type="button" onClick={() => {
                 goToPage(RING_START + 1)
                 onClose()

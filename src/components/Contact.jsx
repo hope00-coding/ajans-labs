@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { store } from '../store'
-import { CONTACT_PAGE, CONTACT } from '../config'
+import { BRAND_NAME, CONTACT_PAGE, CONTACT } from '../config'
 
 const EMPTY = { name: '', email: '', about: '', budget: '' }
 
@@ -57,7 +57,7 @@ export default function Contact() {
     setTouched({ name: true, email: true, about: true, budget: true })
     if (['name', 'email', 'about', 'budget'].some((k) => err(k))) return
     const brief = [
-      'Ajans Labs — Proje brifi',
+      BRAND_NAME + ' — Proje brifi taslağı',
       '',
       'Ad: ' + v.name.trim(),
       'E-posta: ' + v.email.trim(),
@@ -67,7 +67,7 @@ export default function Contact() {
     const url = URL.createObjectURL(new Blob([brief], { type: 'text/plain;charset=utf-8' }))
     const download = document.createElement('a')
     download.href = url
-    download.download = 'ajans-labs-proje-brifi.txt'
+    download.download = 'the-fuel-agency-proje-brifi.txt'
     download.click()
     window.setTimeout(() => URL.revokeObjectURL(url), 1000)
     setSent(true)
@@ -146,7 +146,8 @@ export default function Contact() {
       <footer className="cfoot">
         <div className="col">
           <span className="big">{CONTACT.socialTitle}</span>
-          <span className="mono">{CONTACT.copyright}</span>
+          <span className="mono">{CONTACT.note}</span>
+          <span className="mono">{CONTACT.attribution}</span>
         </div>
         <div className="col">
           {CONTACT.social.map((s) => (

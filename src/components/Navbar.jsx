@@ -1,12 +1,12 @@
-import { CONTACT_PAGE, RING_START } from '../config'
+import { BRAND_NAME, CONTACT_PAGE, RING_START } from '../config'
 import { goToPage } from '../store'
 
 export default function Navbar({ onAbout }) {
   return (
     <header className="nav">
-      <button type="button" className="logo" onClick={() => goToPage(0, false)} aria-label="Ajans Labs ana sayfa">
-        <span className="word">ajans</span>
-        <span className="script">labs</span>
+      <button type="button" className="logo" onClick={() => goToPage(0, false)} aria-label={BRAND_NAME + ' ana sayfa'}>
+        <span className="word">the fuel</span>
+        <span className="script">agency</span>
       </button>
       <nav aria-label="Ana menü">
         <ul>

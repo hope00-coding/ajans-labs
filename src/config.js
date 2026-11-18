@@ -1,6 +1,7 @@
 // Tüm ayarlar burada. Değiştirip kaydet, sayfa kendiliğinden yenilenir.
 
-export const HEADING = 'AJANS LABS' // dev başlık (3D sahnenin arka planına çizilir)
+export const BRAND_NAME = 'The Fuel Agency'
+export const HEADING = BRAND_NAME.toUpperCase() // dev başlık (3D sahnenin arka planına çizilir)
 
 /* ---------------- Cam küre ---------------- */
 export const TILE_COUNT = 240 // küredeki cam panel sayısı
@@ -109,8 +110,8 @@ export const BG_DOT_ALPHA = 0.9 // nokta belirginliği
 /* ---------------- Final (son başlıktan sonra) ---------------- */
 // Her satır bir durak: önce sol yazı, sonra sağ yazı.
 export const FINALE = [
-  { side: 'left', light: '#8a5cff', text: 'Tasarım, yazılım ve dijital pazarlama bir arada. Ajans Labs, bu yaklaşımı interaktif bir web demosunda bir araya getiriyor.' },
-  { side: 'right', light: '#ff5fa8', text: 'Halkaları keşfet. Marka, teknoloji, pazarlama ve medya hizmetlerinin nasıl birleştiğini gör.' },
+  { side: 'left', light: '#8a5cff', text: 'Girne merkezli The Fuel Agency, marka stratejisini web geliştirme ve dijital pazarlamayla bir araya getiriyor.' },
+  { side: 'right', light: '#ff5fa8', text: 'Halkaları keşfet. Marka kimliğinden özel yazılıma ve medya prodüksiyonuna uzanan hizmetleri incele.' },
 ]
 
 
@@ -160,7 +161,7 @@ export const LIGHT_STOPS = [
 
 export const BUBBLE_COUNT = 30 // masaüstünde top sayısı
 export const BUBBLE_COUNT_MOBILE = 18 // mobilde top sayısı
-export const BUBBLE_TEXT = 'AJANS LABS' // toplarla kapanan ortadaki yazı
+export const BUBBLE_TEXT = HEADING // toplarla kapanan ortadaki yazı
 export const BUBBLE_COLOR = '#c9d1e6' // top rengi
 export const BUBBLE_REPEL = 30 // fare itme gücü (büyük = toplar daha sert kaçar)
 export const BUBBLE_SPRING = 9 // toplanma hızı (büyük = daha çabuk geri döner)
@@ -185,9 +186,12 @@ export const CONTACT = {
     budget: 'BÜTÇE SEÇİN',
   },
   budgets: ['10.000 TL ALTI', '10.000 - 25.000 TL', '25.000 - 50.000 TL', '50.000 TL ÜZERİ'],
-  socialTitle: 'FUEL AGENCY',
-  copyright: 'AJANS LABS · BAĞIMSIZ DEMO',
+  socialTitle: HEADING,
+  note: 'GİRNE PARK RESIDENCE, NO: 402 · GİRNE',
+  attribution: 'BAĞIMSIZ KONSEPT SİTE',
   social: [
+    { label: 'E-POSTA ↗', href: 'mailto:contact@thefuel.agency' },
+    { label: 'TELEFON ↗', href: 'tel:+905338443835' },
     { label: 'RESMÎ İLETİŞİM ↗', href: 'https://thefuel.agency/contact/' },
     { label: 'LINKEDIN ↗', href: 'https://www.linkedin.com/company/thefuelagency/' },
   ],

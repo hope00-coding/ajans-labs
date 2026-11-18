@@ -139,7 +139,7 @@ export default function Headings() {
         ctx.textBaseline = 'middle'
         ctx.fillStyle = '#fff'
         if ('letterSpacing' in ctx) ctx.letterSpacing = `${-0.01 * fs}px`
-        ctx.fillText(SECTIONS[i].heading, 0, 0)
+        ctx.fillText(SECTIONS[i].heading, 0, 0, w * 0.96)
         ctx.restore()
         texture.dispose()
         texture.needsUpdate = true

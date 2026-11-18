@@ -1,4 +1,4 @@
-# Ajans Labs: giriş ekranı (Vite + React + React Three Fiber)
+# The Fuel Agency — konsept site: giriş ekranı (Vite + React + React Three Fiber)
 
 ## Çalıştırma
 
