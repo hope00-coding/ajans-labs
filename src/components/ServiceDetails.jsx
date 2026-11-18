@@ -83,7 +83,6 @@ export default function ServiceDetails({ selection, onSelect, onClose }) {
           <>
             <h2 id="detail-title">{ring.title}</h2>
             <p>{ring.desc}</p>
-            <p>{ring.scope}</p>
             <ul className="details-tags">
               {ring.tags.map((tag) => <li key={tag}>{tag}</li>)}
             </ul>
@@ -93,7 +92,7 @@ export default function ServiceDetails({ selection, onSelect, onClose }) {
             </figure>
             <div className="details-actions">
               <button type="button" disabled={selection === 0} onClick={() => move(-1)}>← Önceki hizmet</button>
-              <a href="https://thefuel.agency/portfolio/" target="_blank" rel="noreferrer">Fuel portföyü ↗</a>
+              <a href={ring.url} target="_blank" rel="noreferrer">Fuel Agency’de incele ↗</a>
               <button type="button" disabled={selection === RINGS.length - 1} onClick={() => move(1)}>Sonraki hizmet →</button>
             </div>
           </>
